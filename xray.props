@@ -3,7 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)SDK\include;$(BOOST_1_71_0);$(IncludePath)</IncludePath>
+	<xrBoostDir>$(SolutionDir)3rd party\boost_1_71_0</xrBoostDir>
+    <IncludePath>$(SolutionDir)SDK\include;$(xrBoostDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)SDK\libraries\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Platform)-$(Configuration)\$(ProjectName)\</IntDir>

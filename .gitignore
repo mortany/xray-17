@@ -5,3 +5,4 @@
 *.VC.VC.opendb
 *.user
 *.cache
+/3rd party/boost_1_71_0
