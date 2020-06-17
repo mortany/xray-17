@@ -26,14 +26,13 @@ extern "C" {
 // Lua-bind
 #include <luabind/luabind.hpp>
 #include <luabind/object.hpp>
-#include <luabindex/functor.hpp>
 
 #pragma warning(pop)
 
 typedef lua_State CLuaVirtualMachine;
 
 struct SMemberCallback {
-	luabindex::functor<void>	*m_lua_function;
+	luabind::functor<void>* m_lua_function;
 	luabind::object			*m_lua_object;
 	shared_str				m_method_name;
 };
