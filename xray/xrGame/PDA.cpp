@@ -220,7 +220,7 @@ void CPda::PlayScriptFunction()
 {
 	if(xr_strcmp(m_functor_str, ""))
 	{
-		luabindex::functor<void> m_functor;
+		luabind::functor<void> m_functor;
 		R_ASSERT(ai().script_engine().functor(m_functor_str.c_str(), m_functor));
 		m_functor();
 	}

@@ -23,7 +23,7 @@ extern "C" {
 #pragma warning(pop)
 
 #include <luabind/object.hpp>
-#include <luabindex/functor.hpp>
+#include <luabind/functor.hpp>
 #include <luabind/operator.hpp>
 #include <luabind/adopt_policy.hpp>
 #include <luabind/return_reference_to_policy.hpp>

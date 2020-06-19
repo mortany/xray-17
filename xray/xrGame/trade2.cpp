@@ -243,7 +243,7 @@ u32	CTrade::GetItemPrice(PIItem pItem, bool b_buying)
 			deficit_factor
 		);
 	// use some script discounts
-	luabindex::functor<float>	func;
+	luabind::functor<float>	func;
 	if(b_buying)
 		R_ASSERT(ai().script_engine().functor("trade_manager.get_buy_discount", func));
 	else

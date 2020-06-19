@@ -80,7 +80,7 @@ protected:
 	};
 	xr_vector<shared_str>	m_start_lua_functions;
 	xr_vector<shared_str>	m_stop_lua_functions;
-	luabindex::functor<void>	m_onframe_functor;
+	luabind::functor<void>	m_onframe_functor;
 
 	Flags32					m_flags;
 	CUISequencer*			m_owner;

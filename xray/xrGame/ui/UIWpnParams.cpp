@@ -11,11 +11,11 @@
 
 struct SLuaWpnParams
 {
-	luabindex::functor<float>		m_functorRPM;
-	luabindex::functor<float>		m_functorAccuracy;
-	luabindex::functor<float>		m_functorDamage;
-	luabindex::functor<float>		m_functorDamageMP;
-	luabindex::functor<float>		m_functorHandling;
+	luabind::functor<float>		m_functorRPM;
+	luabind::functor<float>		m_functorAccuracy;
+	luabind::functor<float>		m_functorDamage;
+	luabind::functor<float>		m_functorDamageMP;
+	luabind::functor<float>		m_functorHandling;
 
 	SLuaWpnParams();
 	~SLuaWpnParams();

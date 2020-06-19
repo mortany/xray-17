@@ -83,6 +83,40 @@ static void *lua_alloc		(void *ud, void *ptr, size_t osize, size_t nsize) {
 
 #include "../xrCore/memory_allocator_options.h"
 
+static LPVOID __cdecl luabind_allocator(
+	luabind::memory_allocation_function_parameter const,
+	void const* const pointer,
+	size_t const size
+)
+{
+	if (!size) {
+		LPVOID	non_const_pointer = const_cast<LPVOID>(pointer);
+		xr_free(non_const_pointer);
+		return	(0);
+	}
+
+	if (!pointer) {
+#ifdef DEBUG
+		return	(Memory.mem_alloc(size, "luabind"));
+#else // #ifdef DEBUG
+		return	(Memory.mem_alloc(size));
+#endif // #ifdef DEBUG
+	}
+
+	LPVOID		non_const_pointer = const_cast<LPVOID>(pointer);
+#ifdef DEBUG
+	return		(Memory.mem_realloc(non_const_pointer, size, "luabind"));
+#else // #ifdef DEBUG
+	return		(Memory.mem_realloc(non_const_pointer, size));
+#endif // #ifdef DEBUG
+}
+
+void setup_luabind_allocator()
+{
+	luabind::allocator = &luabind_allocator;
+	luabind::allocator_parameter = 0;
+}
+
 #ifdef USE_ARENA_ALLOCATOR
 static const u32			s_arena_size = 96*1024*1024;
 static char					s_fake_array[s_arena_size];
@@ -642,7 +676,7 @@ luabind::object CScriptStorage::name_space(LPCSTR namespace_name)
 	string256			S1;
 	xr_strcpy				(S1,namespace_name);
 	LPSTR				S = S1;
-	luabind::object		lua_namespace = luabind::globals(lua());
+	luabind::object		lua_namespace = luabind::get_globals(lua());
 	for (;;) {
 		if (!xr_strlen(S))
 			return		(lua_namespace);

@@ -31,7 +31,7 @@ extern "C" {
 };
 
 void CCC_RegisterCommands	();
-
+void setup_luabind_allocator();
 BOOL APIENTRY DllMain(HANDLE hModule, u32 ul_reason_for_call, LPVOID lpReserved)
 {
 	switch (ul_reason_for_call) {
@@ -40,7 +40,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, u32 ul_reason_for_call, LPVOID lpReserved)
 			CCC_RegisterCommands();
 			// keyboard binding
 			CCC_RegisterInput	();
-
+			setup_luabind_allocator();
 #ifdef DEBUG
 			g_profiler			= xr_new<CProfiler>();
 #endif

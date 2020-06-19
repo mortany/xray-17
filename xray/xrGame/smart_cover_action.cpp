@@ -21,11 +21,11 @@ using smart_cover::detail::parse_fvector;
 smart_cover::action::action(luabind::object const &description)
 {
 	luabind::object movement = description["movement"];
-	if (luabind::type(movement) != LUA_TNIL && luabind::type(movement) == LUA_TBOOLEAN) {
+	if (movement.type() != LUA_TNIL && movement.type() == LUA_TBOOLEAN) {
 		m_movement				= luabind::object_cast<bool>(movement);
 
 		luabind::object position = description["position"];
-		if (luabind::type(position) != LUA_TNIL)
+		if (position.type() != LUA_TNIL)
 			m_target_position	= luabind::object_cast<Fvector>(position);
 	}
 	else
@@ -33,12 +33,15 @@ smart_cover::action::action(luabind::object const &description)
 
 	luabind::object animations;
 	parse_table					(description, "animations", animations);
-	for (luabind::iterator I(animations), E; I != E; ++I) {
-		VERIFY(luabind::type(I.key()) == LUA_TSTRING);
+	typedef luabind::object::iterator	iterator;
+	iterator		I = animations.begin();
+	iterator		E = animations.end();
+	for ( ; I != E; ++I) {
+		VERIFY		(I.key().type() == LUA_TSTRING);
 		LPCSTR		animation_type = luabind::object_cast<LPCSTR>(I.key());
 		luabind::object	table = *I;
-		if (luabind::type(table) != LUA_TTABLE) {
-			VERIFY	(luabind::type(table) != LUA_TNIL);
+		if (table.type() != LUA_TTABLE) {
+			VERIFY	(table.type() != LUA_TNIL);
 			continue;
 		}
 		add_animation	(animation_type, *I);
@@ -52,12 +55,14 @@ smart_cover::action::~action()
 
 void smart_cover::action::add_animation(LPCSTR type, luabind::object const &table)
 {	
-	VERIFY						( luabind::type(table) == LUA_TTABLE );
+	VERIFY						( table.type() == LUA_TTABLE );
+	luabind::object::iterator I	= table.begin();
+	luabind::object::iterator E	= table.end();
 	Animations* animations		= xr_new<Animations>( );
-	for (luabind::iterator I(table), E; I != E; ++I) {
+	for ( ; I != E; ++I) {
 		luabind::object	string	= *I;
-		if (luabind::type(string) != LUA_TSTRING) {
-			VERIFY				( luabind::type(string) != LUA_TNIL );
+		if (string.type() != LUA_TSTRING) {
+			VERIFY				( string.type() != LUA_TNIL );
 			continue;
 		}
 

@@ -22,7 +22,7 @@ using smart_cover::transitions::animation_action;
 
 action::action					(luabind::object const &table)
 {
-	VERIFY						(luabind::type(table) == LUA_TTABLE);
+	VERIFY						(table.type() == LUA_TTABLE);
 
 	m_precondition_functor		= parse_string(table, "precondition_functor");
 	m_precondition_params		= parse_string(table, "precondition_params");
@@ -39,7 +39,7 @@ action::~action()
 
 bool action::applicable			() const
 {
-	luabindex::functor<bool>		functor;
+	luabind::functor<bool>		functor;
 
 	R_ASSERT2					(
 		ai().script_engine().functor(m_precondition_functor.c_str(),functor), 
@@ -51,7 +51,9 @@ bool action::applicable			() const
 
 void action::load_animations	(luabind::object const &table)
 {
-	for (luabind::iterator I(table), E; I != E; ++I) {
+	luabind::object::iterator	I = table.begin();
+	luabind::object::iterator	E = table.end();
+	for ( ; I != E; ++I) {
 		luabind::object			tmp = *I;
 		Fvector	const			&pos = parse_fvector(tmp, "position");
 		shared_str				anim_id = parse_string(tmp, "animation");

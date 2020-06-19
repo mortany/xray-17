@@ -7,6 +7,9 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #include "pch_script.h"
+extern "C" {
+	#include "lua.h"
+};
 #include "script_engine.h"
 #include "script_thread.h"
 #include "ai_space.h"
